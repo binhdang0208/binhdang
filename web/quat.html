@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dang Thai Binh</title>
+</head>
+<body>
+
+<P>Giá Trị Biến:</P> <label id="chotyml"></label>
+<P>Giá Trị Biến:</P> <label id="yeume"></label>
+<P>Giá Trị Biến:</P> <label id="data"></label>
+<h1 style="color : yellow ">THIÊT KẾ NHÀ THÔNG MINH </h1>
+<p>Phòng Khách</p>
+
+ <img id = "anh1" src = "12.jpg" style = "width:120px; hight:120px">
+<button onclick ="chay1()" id = "binh1"> QUAT1</button>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+<!-- THU VIEN html-->
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+
+
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDtvElzVF2OLX0P4OoV1ttB-5G045Srzyk",
+    authDomain: "thaibinh01912.firebaseapp.com",
+    databaseURL: "https://thaibinh01912.firebaseio.com",
+    projectId: "thaibinh01912",
+    storageBucket: "thaibinh01912.appspot.com",
+    messagingSenderId: "983042065621",
+    appId: "1:983042065621:web:f7a2e0b096fcaabee94e5c",
+    measurementId: "G-F5Q009V166"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+var binhbeo= firebase.database().ref('AIO1');
+var quat1 = 0;
+
+binhbeo.on('value', function(snapshot){
+	quat1=snapshot.child('data/K-01-123456/data/OUTPUT/DO01').val();
+
+	if(quat1==1){
+
+		document.getElementById('anh1').src = "2.jpg";
+	};
+	if (quat1==0)
+	{
+		document.getElementById('anh1').src = "12.jpg";
+	};
+});
+
+function chay1()
+{
+if(quat1==1)
+{
+	firebase.database().ref("AIO1/data/K-01-123456/data/OUTPUT/DO01").set(0);
+}
+ else if (quat1==0)
+{
+	firebase.database().ref("AIO1/data/K-01-123456/data/OUTPUT/DO01").set(1);
+}
+
+
+}
+</script>

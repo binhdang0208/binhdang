@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Dang Thai Binh</title>
+</head>
+<body>
+
+<P>Giá Trị Biến:</P> <label id="chotyml"></label>
+<P>Giá Trị Biến:</P> <label id="yeume"></label>
+<P>Giá Trị Biến:</P> <label id="data"></label>
+<h1 style="color : yellow ">THIÊT KẾ NHÀ THÔNG MINH </h1>
+<p>Phòng Khách</p>
+<img id="hinhanh" src= "http://iotcontrol.online/AIO/images/light_off.png" style ="width:120px; hight;:120px ">
+<button onclick ="tacdong()" id ="duong">Công Tắc</button>
+
+</body>
+</html>
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+<!-- THU VIEN html-->
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
+
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDtvElzVF2OLX0P4OoV1ttB-5G045Srzyk",
+    authDomain: "thaibinh01912.firebaseapp.com",
+    databaseURL: "https://thaibinh01912.firebaseio.com",
+    projectId: "thaibinh01912",
+    storageBucket: "thaibinh01912.appspot.com",
+    messagingSenderId: "983042065621",
+    appId: "1:983042065621:web:f7a2e0b096fcaabee94e5c",
+    measurementId: "G-F5Q009V166"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+var den19=0;
+var giatri = firebase.database().ref();//gán biến giá trị = với cây B, khai báo sử dụng cây B
+var bientam;
+ giatri.on('value',function(snapshot){// khi cây B cso sự thay đổi thì có sự thay đổi
+ 	
+ 	bientam = snapshot.child('K').val();// đặt biến tạm ra = 555. lệnh lấy giá trị 
+ 	if(bientam == 1){
+ 		document.getElementById('hinhanh').src = "http://iotcontrol.online/AIO/images/light_on.png";
+
+ 	};
+ 	if(bientam == 0){
+ 		document.getElementById('hinhanh').src = "http://iotcontrol.online/AIO/images/light_off.png";
+ 	};
+ });
+ var tam;
+
+ function tacdong ()
+ {
+ 	
+ if (bientam==1)
+ {
+firebase.database().ref("K").set(0);
+ }
+ 	
+ else 
+{
+	firebase.database().ref("K").set(1);
+}
+
+}
+
+
+</script>

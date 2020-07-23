@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bảng Điều Khiển</title>
+</head>
+
+<body>
+    <h1 style="color:#883F3F"> <b>Bảng</b> Điều Khiển</h1>
+    <label>Giá Trị Cảm Biến : </label> <label id="sensor"></label>
+    <img id="img-1" src="http://iotcontrol.online/AIO/images/light_off.png" style="width: 160px;height: 160px">
+    <button onclick="tacdong()" id="btn">Công Tắc 1</button>
+</body>
+
+</html>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+<script>
+//Khúc này khai báo cấu hình Firebase
+var config = {
+    apiKey: "AIzaSyDQeQ-Y2vo9VvcO5fQjLAJiywXS8M51qGM",
+    authDomain: "iotthuc.firebaseapp.com",
+    databaseURL: "https://iotthuc.firebaseio.com",
+    projectId: "iotthuc",
+    storageBucket: "iotthuc.appspot.com",
+    messagingSenderId: "1018859871923",
+    appId: "1:1018859871923:web:a6ddbc98dc1c5ebed29ac6"
+};
+firebase.initializeApp(config);
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//khai báo biến cục bộ
+
+var den1_Stt = 0;
+//Khi có sự thay đổi trong ref
+firebase.database().ref('thietbi').on('value', function (snapshot){
+    //Khi có sự thay đổi ở cây thietbi trên máy chủ chương trình sẽ chạy ở đây
+    //Lấy dữ liệu cảm biến
+
+    //đặt vào biến tạm cho dễ dùng:
+
+   var sensorvalue = snapshot.child('cambien/nhietdo').val(); //cấu trúc lấy giá trị nằm trong child
+
+   document.getElementById('sensor').innerHTML = snapshot.child('cambien/nhietdo').val();//thay đổi thẻ html có id là sensor bằng với giá trị lấy 
+   //lấy trạng thái bóng đèn đặt vào biến tạm
+   den1_Stt = snapshot.child('den1').val();
+   //thay đổi màu sắc cái bóng đèn
+
+   if(den1_Stt==1)
+   {
+    document.getElementById('img-1').src = "http://iotcontrol.online/AIO/images/light_on.png";
+   }
+   else
+   {
+    document.getElementById('img-1').src = "http://iotcontrol.online/AIO/images/light_off.png";
+   }
+
+   
+});
+
+//khi nhấn nút
+function tacdong()
+{
+    var bientam;
+    if (den1_Stt==1) {
+        var bientam  = {
+        den1:0
+    };
+    }
+    else
+    {
+        var bientam  = {
+        den1:1
+    };
+    }
+firebase.database().ref('thietbi').update(bientam);
+
+};
+
+
+
+</script>
